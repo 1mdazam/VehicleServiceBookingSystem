@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login / Register - Vehicle Service Booking</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(to right, #007bff, #00bfff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: white;
+            width: 380px;
+            border-radius: 12px;
+            padding: 35px 30px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.25);
+            transition: all 0.3s ease;
+        }
+
+        h2 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 25px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        /* Checkbox container styling */
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start; /* aligns checkbox + label to left */
+            gap: 6px;
+            margin-top: 6px;  /* equal height spacing below password box */
+            margin-bottom: 14px; /* equal spacing above button */
+            font-size: 14px;
+            color: #333;
+            user-select: none;
+        }
+
+        .checkbox-container input[type="checkbox"] {
+            transform: scale(1.2);
+            cursor: pointer;
+            margin: 0;
+        }
+
+        .checkbox-container label {
+            cursor: pointer;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 5px;
+            font-size: 15px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        p {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .error {
+            color: red;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .toggle {
+            color: #333;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2 id="form-title">🔐 Login</h2>
+
+    <p th:if="${error}" class="error" th:text="${error}"></p>
+
+    <!-- LOGIN FORM -->
+    <form id="loginForm" th:action="@{/login}" method="post">
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="password" id="loginPassword" name="password" placeholder="Password" required>
+
+        <div class="checkbox-container">
+            <input type="checkbox" id="showLoginPass">
+            <label for="showLoginPass">Show Password</label>
+        </div>
+
+        <button type="submit">Login</button>
+        <p class="toggle">Don’t have an account? <a onclick="toggleForms()">Register</a></p>
+    </form>
+
+    <!-- REGISTER FORM -->
+    <form id="registerForm" th:action="@{/register}" method="post" style="display:none;">
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="password" id="registerPassword" name="password" placeholder="Password" required>
+
+        <div class="checkbox-container">
+            <input type="checkbox" id="showRegisterPass">
+            <label for="showRegisterPass">Show Password</label>
+        </div>
+
+        <button type="submit">Register</button>
+        <p class="toggle">Already have an account? <a onclick="toggleForms()">Login</a></p>
+    </form>
+</div>
+
+<script>
+    // 🔁 Toggle between login and register
+    function toggleForms() {
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+        const title = document.getElementById('form-title');
+
+        if (loginForm.style.display === 'none') {
+            loginForm.style.display = 'block';
+            registerForm.style.display = 'none';
+            title.textContent = '🔐 Login';
+        } else {
+            loginForm.style.display = 'none';
+            registerForm.style.display = 'block';
+            title.textContent = '📝 Register';
+        }
+    }
+
+    // 👁️ Show/Hide password for login
+    document.getElementById('showLoginPass').addEventListener('click', function() {
+        const passField = document.getElementById('loginPassword');
+        passField.type = this.checked ? 'text' : 'password';
+    });
+
+    // 👁️ Show/Hide password for register
+    document.getElementById('showRegisterPass').addEventListener('click', function() {
+        const passField = document.getElementById('registerPassword');
+        passField.type = this.checked ? 'text' : 'password';
+    });
+</script>
+
+</body>
+</html>

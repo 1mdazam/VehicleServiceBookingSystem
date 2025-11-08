@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Vehicle Service Booking System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 20px;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #007bff;
+        }
+
+        form {
+            background: #fff;
+            padding: 20px;
+            margin: 20px auto;
+            width: 400px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            width: 90%;
+            margin: 30px auto;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>🚗 Vehicle Service Booking System</h1>
+
+    <form th:action="@{/vehicles-page}" method="post" th:object="${vehicle}">
+        <label>Owner Name:</label>
+        <input type="text" th:field="*{ownerName}" placeholder="Enter owner name" required>
+
+        <label>Vehicle Number:</label>
+        <input type="text" th:field="*{vehicleNumber}" placeholder="TS09AB1234" required>
+
+        <label>Vehicle Type:</label>
+        <input type="text" th:field="*{vehicleType}" placeholder="Car, Bike, etc." required>
+
+        <label>Service Type:</label>
+        <input type="text" th:field="*{serviceType}" placeholder="Full Service / Repair / Wash" required>
+
+        <label>Contact Number:</label>
+        <input type="text" th:field="*{contactNumber}" placeholder="9876543210" required>
+
+        <button type="submit">Add Vehicle</button>
+    </form>
+
+   <div th:if="${success}">
+    <p style="text-align:center; color:green; font-weight:bold;" th:text="${success}"></p>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Owner Name</th>
+            <th>Vehicle Number</th>
+            <th>Vehicle Type</th>
+            <th>Service Type</th>
+            <th>Contact Number</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="v : ${vehicles}">
+            <td th:text="${v.id}"></td>
+            <td th:text="${v.ownerName}"></td>
+            <td th:text="${v.vehicleNumber}"></td>
+            <td th:text="${v.vehicleType}"></td>
+            <td th:text="${v.serviceType}"></td>
+            <td th:text="${v.contactNumber}"></td>
+            <td>
+                <a th:href="@{'/edit/' + ${v.id}}" style="color:blue; text-decoration:none;">Edit</a> |
+                <a th:href="@{'/delete/' + ${v.id}}" 
+                   style="color:red; text-decoration:none;"
+                   onclick="return confirm('Are you sure you want to delete this vehicle?');">
+                   Delete
+                </a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+</body>
+<div style="display: flex; justify-content: space-between; align-items: center; background-color:#007bff; color:white; padding:10px 20px;">
+    <h2>🚗 Vehicle Service Booking</h2>
+    <div>
+        <span th:text="'Welcome, ' + ${username} + ' 👋'"></span>
+        <a th:href="@{/logout}" style="color:white; text-decoration:none; margin-left:15px;">Logout</a>
+    </div>
+</div>
+
+</html>
