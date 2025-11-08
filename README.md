@@ -33,4 +33,4 @@ This project demonstrates **Spring Boot + MySQL + Thymeleaf** integration with a
 
 ### 1️⃣ Clone the Repository
 ```bash
-git clone https://github.com/<your-username>/VehicleServiceBookingSystem.git
+git clone https://github.com/<1mdazam>/VehicleServiceBookingSystem.git
